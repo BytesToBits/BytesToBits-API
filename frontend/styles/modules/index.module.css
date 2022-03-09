@@ -1,0 +1,7 @@
+.powerHover {
+    transition: .2s ease;
+}
+
+.powerHover:hover {
+    font-weight: 700;
+}
