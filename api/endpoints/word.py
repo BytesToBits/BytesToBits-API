@@ -14,9 +14,9 @@ class WordEndPoint(Resource):
 
     @make_async
     async def get(self):
-        err = check_token(request.headers, "/word/")
+        err, token = check_token(request.headers, "/word/")
         if err: return err()
 
         word = random.choice(read_json("words"))
         
-        return response(request.headers["Authorization"], word, 200)
+        return response(token, word, 200)

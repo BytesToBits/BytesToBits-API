@@ -26,11 +26,11 @@ def check_token(headers, endpoint=None):
         update_timers()
     
     if not "Authorization" in headers:
-        return UnAuthorized().get
+        return UnAuthorized().get, None
 
     token = headers["Authorization"]
 
-    if not Accounts.find_by_token(token): return UnAuthorized().get
+    if not Accounts.find_by_token(token): return UnAuthorized().get, None
 
     token = Tokens(token)
 
@@ -38,11 +38,13 @@ def check_token(headers, endpoint=None):
         if token.get_one(token=token.token)["ratelimited"] <= datetime.utcnow():
             token.col.update_one({"token": token.token}, {"$set": {"ratelimited": False}})
         else:
-            return RateLimited().get 
+            return RateLimited().get, None
 
     if token.uses() >= 50:
         token.ratelimit()
-        return RateLimited().get
+        return RateLimited().get, None
 
     if endpoint:
         token.record(endpoint)
+
+    return None, headers["Authorization"]

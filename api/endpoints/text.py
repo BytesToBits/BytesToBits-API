@@ -14,7 +14,7 @@ class TextEndPoint(Resource):
 
     @make_async
     async def get(self):
-        err = check_token(request.headers, "/text/")
+        err, token = check_token(request.headers, "/text/")
         if err: return err()
 
         isAll = request.args.get("all").__str__()
@@ -22,6 +22,6 @@ class TextEndPoint(Resource):
         texts = read_json("texts")
 
         if isAll.lower() == "true":
-            return response(request.headers["Authorization"], texts, 200)
+            return response(token, texts, 200)
         
-        return response(request.headers["Authorization"], random.choice(texts), 200)
+        return response(token, random.choice(texts), 200)

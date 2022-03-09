@@ -12,19 +12,19 @@ class LyricsEndPoint(Resource):
 
     @make_async
     async def get(self):
-        err = check_token(request.headers, "/lyrics/")
+        err, token = check_token(request.headers, "/lyrics/")
         if err: return err()
 
         song = request.args.get("song")
         author = request.args.get("author")
 
         if not song:
-            return response(request.headers["Authorization"], { "message": "'song' is a required argument" }, 400)
+            return response(token, { "message": "'song' is a required argument" }, 400)
         
         genius_song = genius.get(song, author)
 
         if not genius_song:
-            return response(request.headers["Authorization"], { "message": "song not found" }, 400)
+            return response(token, { "message": "song not found" }, 400)
         
-        return response(request.headers["Authorization"], genius_song, 200)
+        return response(token, genius_song, 200)
         
