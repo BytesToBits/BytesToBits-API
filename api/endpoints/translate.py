@@ -4,6 +4,7 @@ from handlers.asynchronous import make_async
 from handlers.form_response import response
 from handlers.tokens import check_token
 from googletrans import Translator
+from db import Error
 
 class TranslateEndPoint(Resource):
     endpoints: ClassVar[list[str]] = ["/translate", "/translate/"]
@@ -26,8 +27,9 @@ class TranslateEndPoint(Resource):
             translation = Translator().translate(text=text, dest=to_lang, src=from_lang)
             return response(token, translation.text, 200)
         except Exception as e:
+            code = Error(error=str(e))
             return response(token, {
                 "message": "an error ocurred",
                 "error": str(e),
-                "code": str(e.__traceback__.__str__().split(" ")[-1][:-1])
+                "code": code
             })
