@@ -12,3 +12,17 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+ul, ol {
+    list-style: none;
+}
+
+li::before {
+    content: "💠";
+    margin-right: 5px;
+}
+
+.code-area > h1 { font-size: 2em; }
+.code-area > h2 { font-size: 1.5em; }
+.code-area > h3 { font-size: 1.17em; }
+.code-area > h4 { font-size: 1em; }

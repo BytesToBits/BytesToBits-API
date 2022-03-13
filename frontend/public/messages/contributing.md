@@ -1,0 +1,5 @@
+✨ **Do you want to help us maintain the API?** ✨ 
+# Epic!
+The API is open-source, which means everyone can view the code, edit it, and request to merge the changes to the main application! We really appreciate any effort towards improving the API, in any way, so do not hesitate to create a Pull Request!  
+**[Go to the Repository](https://github.com/BytesToBits/BytesToBits-API)**.  
+We also like to reward any contributors we believe have improved our code. That's why if you're dedicated and your requests are actually useful, you will gain access to a developers-only server made, where all BytesToBits developers, maintainers, and contributors are to test any code they want, or to collaborate on projects on the organization. Even if we do not end up inviting you, you will earn a role in the main server.

@@ -46,6 +46,18 @@ export default function Index({ session, texts }) {
       <Box mt={3} mb={10} id="how-to-use">
         <Markdown>{texts.howToUse}</Markdown>
       </Box>
+
+      <StyledHeader>RATELIMITS</StyledHeader>
+      <Divider bg="black" h={".7px"} />
+      <Box mt={3} mb={10} id="rate-limits">
+        <Markdown>{texts.rateLimits}</Markdown>
+      </Box>
+
+      <StyledHeader>CONTRIBUTING</StyledHeader>
+      <Divider bg="black" h={".7px"} />
+      <Box mt={3} mb={10} id="contributing">
+        <Markdown>{texts.contributing}</Markdown>
+      </Box>
     </BaseLayout>
   )
 }
@@ -56,7 +68,9 @@ export const getServerSideProps = async (ctx) => {
 
   const texts = {
     information: await getText("information"),
-    howToUse: await getText("howToUse")
+    howToUse: await getText("howToUse"),
+    rateLimits: await getText("rateLimits"),
+    contributing: await getText("contributing")
   }
 
   return {
