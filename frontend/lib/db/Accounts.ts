@@ -70,11 +70,33 @@ const getToken = async(email) => {
     })
 }
 
+const tokenInfo = async(token) => {
+    return await Database.Execute(async(client:MongoClient) => {
+        const col = client.db("API").collection("tokens")
+
+        const data = await col.findOne({
+            token: token
+        })
+
+        if (!data) return {}
+
+        return {
+            ...data,
+            actions: data.actions.map(action => ({
+                ...action,
+                date: action.date.toString()
+            })),
+            ratelimited: data.ratelimited.toString()
+        }
+    })
+}
+
 const Accounts = {
     createAccount,
     exists,
     getToken,
-    Account
+    Account,
+    tokenInfo
 }
 
 export default Accounts

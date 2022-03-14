@@ -9,6 +9,7 @@ export default function HeaderText(props: TextProps) {
                 base: "30px",
                 lg: "2vw"
             }}
+            {...props}
         >
             {props.children}
         </Text>

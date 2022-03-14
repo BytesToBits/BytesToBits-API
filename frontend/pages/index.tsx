@@ -1,4 +1,4 @@
-import { Box, Divider, Text, TextProps } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Text, TextProps } from "@chakra-ui/react";
 import BaseLayout from "../components/BaseLayout";
 import indexStyle from "../styles/modules/index.module.css"
 import ReactMarkdown from "react-markdown"
@@ -7,8 +7,11 @@ import { getSession } from "next-auth/react"
 import HeaderText from "../components/Text/Header";
 import Markdown from "../components/Markdown";
 import getText from "../lib/getText";
+import { useRouter } from "next/router";
 
 export default function Index({ session, texts }) {
+  const router = useRouter()
+
   const headerSize = {
     base: "30px",
     lg: "2vw"
@@ -20,9 +23,13 @@ export default function Index({ session, texts }) {
 
   return (
     <BaseLayout title={"Home"}>
-      <HeaderText>
-        BytesToBits
-      </HeaderText>
+      <Flex justifyContent={"space-between"}>
+        <HeaderText>
+          BytesToBits
+        </HeaderText>
+
+        <Button colorScheme={"brand.blue"} onClick={() => router.push("/me")}>Account</Button>
+      </Flex>
       <Text
         fontSize={{
           base: "20px",

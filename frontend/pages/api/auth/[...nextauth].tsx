@@ -13,7 +13,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
     return await NextAuth(req, res, {
         pages: {
-            signIn: "/login"
+            signIn: "/login",
+            verifyRequest: "/verify"
         },
         adapter: MongoDBAdapter(clientPromise),
         providers: [
@@ -35,6 +36,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                     } else {
                         data.token = await Accounts.createAccount(data.email)
                     }
+                    console.log(data.token)
+                    data.tokenInfo = await Accounts.tokenInfo(data.token)
                 }
 
                 return data
