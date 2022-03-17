@@ -4,3 +4,4 @@ from .word import WordEndPoint as Word
 from .translate import TranslateEndPoint as Translate
 
 from .image.discord_message_faker import DiscordMessageFaker
+from .image.btbify import BTBIFY
