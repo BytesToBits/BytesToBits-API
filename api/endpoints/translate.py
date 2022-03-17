@@ -32,4 +32,4 @@ class TranslateEndPoint(Resource):
                 "message": "an error ocurred",
                 "error": str(e),
                 "code": code
-            })
+            }, 500)
