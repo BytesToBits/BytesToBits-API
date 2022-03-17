@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_restful import Api
 from flask_cors import CORS
 
@@ -12,7 +12,7 @@ CORS(app)
 @app.route("/")
 @make_async
 async def index():
-    return "<h1>Welcome to the BytesToBits API</h1>"
+    return redirect("https://docs.bytestobits.dev/")
 
 for REACH in [Text, Lyrics, Word, Translate, DiscordMessageFaker]:
     api.add_resource(REACH, *REACH.endpoints)
