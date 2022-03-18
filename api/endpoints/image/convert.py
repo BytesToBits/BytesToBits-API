@@ -22,7 +22,7 @@ class Convert(Resource):
         image = request.args.get("image")
         to = "jpeg" if request.args.get("to") == "jpg" else request.args.get("to")
 
-        if to not in ("jpeg", "png", "webm"):
+        if to not in ("jpeg", "png", "webp", "bmp"):
             return response(token, {"message": "conversion type not supported, please choose jpg, png or webm"}, 400)
 
         filedata = urlparse(image)
