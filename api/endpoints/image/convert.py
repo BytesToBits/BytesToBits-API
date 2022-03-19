@@ -1,5 +1,6 @@
 import os.path
 
+import requests
 from PIL import Image
 from flask_restful import Resource, request
 from typing import ClassVar
@@ -25,15 +26,13 @@ class Convert(Resource):
         if to not in ("jpeg", "png", "webp", "bmp"):
             return response(token, {"message": "conversion type not supported, please choose jpg, png or webm"}, 400)
 
-        filedata = urlparse(image)
-        filename = os.path.basename(filedata.path)
-        image_path = f"./image_pipe/{filename}"
-        opener = urllib.request.URLopener()
-        opener.addheader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36')
-        filename, headers = opener.retrieve(image, image_path)
-        img = Image.open(image_path).convert("RGB")
+        url_request = requests.get(image)
+        if not url_request.headers["content-type"].startswith("image"):
+            return response(token, {"message": "Url provided has to be an Image"}, 400)
+
+        img_bytes = BytesIO(url_request.content)
+        img = Image.open(img_bytes).convert("RGB")
 
         img_bytes = BytesIO()
         img.save(img_bytes, to)
-        os.remove(filename)
         return response_file(token, BytesIO(img_bytes.getvalue()))
