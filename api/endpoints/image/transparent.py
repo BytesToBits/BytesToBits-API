@@ -23,7 +23,7 @@ class Transparent(Resource):
             return response(token, {
                 "message": "an error ocurred",
                 "error": str(e),
-                "code": code
+                "code": code.code
             }, 500)
         
         return response_file(token, BytesIO(image_data))

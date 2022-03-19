@@ -31,5 +31,5 @@ class TranslateEndPoint(Resource):
             return response(token, {
                 "message": "an error ocurred",
                 "error": str(e),
-                "code": code
+                "code": code.code
             }, 500)

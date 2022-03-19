@@ -4,20 +4,20 @@ from typing import ClassVar
 from handlers.asynchronous import make_async
 from handlers.form_response import response_file, response
 from handlers.tokens import check_token
-from utils.images import DiscordMessage
 from db import Error
+from utils.images import change_hue
 
 
-class DiscordMessageFaker(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/discord-message-faker", "/image/discord-message-faker/"]
+class HueShift(Resource):
+    endpoints: ClassVar[list[str]] = ["/image/hue-shift", "/image/hue-shift/"]
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/discord-message-faker/")
+        err, token = check_token(request.headers, "/image/hue-shift/")
         if err: return err()
-
+        
         try:
-            image_data = await DiscordMessage(**request.args)
+            image_data = await change_hue(**request.args)
         except Exception as e:
             code = Error(error=str(e))
             return response(token, {
