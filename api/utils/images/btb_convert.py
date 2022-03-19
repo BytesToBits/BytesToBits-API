@@ -3,10 +3,10 @@ from io import BytesIO
 
 import requests
 
-async def btbify(image_url):
+async def btbify(image):
     canvas = Image.new('RGBA', (500,500), (0,0,0,0))
 
-    image = Image.open(BytesIO(requests.get(image_url).content))
+    image = Image.open(BytesIO(requests.get(image).content))
     image =ImageOps.fit(image, canvas.size, centering=(.5,.5))
     mask = Image.open("utils/images/assets/btb_mask.png").convert("L")
     mask = ImageOps.fit(mask, image.size, centering=(.5, .5))
