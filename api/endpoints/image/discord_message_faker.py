@@ -13,7 +13,7 @@ class DiscordMessageFaker(Resource):
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/discord-message-faker/")
+        err, token = check_token(request.headers, DiscordMessageFaker.endpoints[1])
         if err: return err()
 
         try:

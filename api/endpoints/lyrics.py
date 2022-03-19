@@ -7,12 +7,12 @@ from handlers.tokens import check_token
 from utils import genius
 
 
-class LyricsEndPoint(Resource):
+class Lyrics(Resource):
     endpoints: ClassVar[list[str]] = ["/lyrics", "/lyrics/"]
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/lyrics/")
+        err, token = check_token(request.headers, Lyrics.endpoints[1])
         if err: return err()
 
         song = request.args.get("song")

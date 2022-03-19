@@ -9,12 +9,12 @@ import random
 from utils import read_json
 
 
-class TextEndPoint(Resource):
+class Text(Resource):
     endpoints: ClassVar[list[str]] = ["/text", "/text/"]
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/text/")
+        err, token = check_token(request.headers, Text.endpoints[1])
         if err: return err()
 
         isAll = request.args.get("all").__str__()

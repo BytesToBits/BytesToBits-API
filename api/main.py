@@ -2,7 +2,7 @@ from flask import Flask, redirect
 from flask_restful import Api
 from flask_cors import CORS
 
-from endpoints import Text, Lyrics, Word, Translate, DiscordMessageFaker, BTBIFY, Convert, Transparent, HueShift
+from endpoints import Resources
 from handlers.asynchronous import make_async
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ CORS(app)
 async def index():
     return redirect("https://docs.bytestobits.dev/")
 
-for REACH in [Text, Lyrics, Word, Translate, DiscordMessageFaker, BTBIFY, Convert, Transparent, HueShift]:
-    api.add_resource(REACH, *REACH.endpoints)
+for Resource in Resources:
+    api.add_resource(Resource, *Resource.endpoints)
 
 app.run(debug=True)

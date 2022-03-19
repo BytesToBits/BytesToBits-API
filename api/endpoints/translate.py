@@ -6,12 +6,12 @@ from handlers.tokens import check_token
 from googletrans import Translator
 from db import Error
 
-class TranslateEndPoint(Resource):
+class Translate(Resource):
     endpoints: ClassVar[list[str]] = ["/translate", "/translate/"]
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/translate/")
+        err, token = check_token(request.headers, Translate.endpoints[1])
         if err: return err()
 
         from_lang = request.args.get("from") or 'auto'

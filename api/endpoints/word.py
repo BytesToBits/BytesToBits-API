@@ -9,12 +9,12 @@ import random
 from utils import read_json
 
 
-class WordEndPoint(Resource):
+class Word(Resource):
     endpoints: ClassVar[list[str]] = ["/word", "/word/"]
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/word/")
+        err, token = check_token(request.headers, Word.endpoints[1])
         if err: return err()
 
         word = random.choice(read_json("words"))

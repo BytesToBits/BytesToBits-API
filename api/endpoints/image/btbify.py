@@ -13,7 +13,7 @@ class BTBIFY(Resource):
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/btbify/")
+        err, token = check_token(request.headers, BTBIFY.endpoints[1])
         if err: return err()
 
         try:

@@ -17,14 +17,14 @@ class Convert(Resource):
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/convert/")
+        err, token = check_token(request.headers, Convert.endpoints[1])
         if err: return err()
 
         image = request.args.get("image")
         to = "jpeg" if request.args.get("to") == "jpg" else request.args.get("to")
 
         if to not in ("jpeg", "png", "webp", "bmp", "L"):
-            return response(token, {"message": "conversion type not supported, please choose jpg/jpeg, png, bmp, L, or webp"}, 400)
+            return response(token, {"message": "conversion type not supported, please choose jpg/jpeg, png, bmp, L (for black & white), or webp"}, 400)
 
         url_request = requests.get(image)
         if not url_request.headers["content-type"].startswith("image"):

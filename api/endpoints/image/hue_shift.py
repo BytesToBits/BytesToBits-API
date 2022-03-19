@@ -13,7 +13,7 @@ class HueShift(Resource):
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/hue-shift/")
+        err, token = check_token(request.headers, HueShift.endpoints[1])
         if err: return err()
         
         try:

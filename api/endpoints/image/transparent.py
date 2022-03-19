@@ -13,7 +13,7 @@ class Transparent(Resource):
 
     @make_async
     async def get(self):
-        err, token = check_token(request.headers, "/image/transparent/")
+        err, token = check_token(request.headers, Transparent.endpoints[1])
         if err: return err()
         
         try:
