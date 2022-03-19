@@ -4,7 +4,7 @@ from io import BytesIO
 
 import requests
 
-async def clear_background(image, color, strength=20):
+async def clear_background(image, color="#ffffff", strength=20):
     image = Image.open(BytesIO(requests.get(image).content)).convert('RGBA')
     image_data = image.load()
 

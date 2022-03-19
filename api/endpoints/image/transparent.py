@@ -15,7 +15,7 @@ class Transparent(Resource):
     async def get(self):
         err, token = check_token(request.headers, "/image/transparent/")
         if err: return err()
-
+        
         try:
             image_data = await make_transparent(**request.args)
         except Exception as e:
