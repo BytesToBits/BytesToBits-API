@@ -23,16 +23,19 @@ class Convert(Resource):
         image = request.args.get("image")
         to = "jpeg" if request.args.get("to") == "jpg" else request.args.get("to")
 
-        if to not in ("jpeg", "png", "webp", "bmp"):
-            return response(token, {"message": "conversion type not supported, please choose jpg, png or webm"}, 400)
+        if to not in ("jpeg", "png", "webp", "bmp", "L"):
+            return response(token, {"message": "conversion type not supported, please choose jpg/jpeg, png, bmp, L, or webp"}, 400)
 
         url_request = requests.get(image)
         if not url_request.headers["content-type"].startswith("image"):
             return response(token, {"message": "Url provided has to be an Image"}, 400)
 
         img_bytes = BytesIO(url_request.content)
+
         img = Image.open(img_bytes).convert("RGB")
 
+        if to == "L": img = img.convert('L')
+
         img_bytes = BytesIO()
-        img.save(img_bytes, to)
+        img.save(img_bytes, to if to != "L" else "png")
         return response_file(token, BytesIO(img_bytes.getvalue()))
