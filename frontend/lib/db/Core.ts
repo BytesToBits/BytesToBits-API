@@ -2,8 +2,6 @@ import { MongoClient, MongoNotConnectedError } from "mongodb"
 import Config from "../../config.json"
 
 export const client = new MongoClient(Config.mongoUri)
-client.connect()
-console.log("Connected to Database")
 
 async function Execute(__f) {
     try {

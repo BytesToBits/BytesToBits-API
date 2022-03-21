@@ -23,23 +23,6 @@ export default function Index({ session, texts }) {
 
   return (
     <BaseLayout title={"Home"}>
-      <Flex justifyContent={"space-between"}>
-        <HeaderText>
-          BytesToBits
-        </HeaderText>
-
-        <Button colorScheme={"brand.blue"} onClick={() => router.push("/me")}>Account</Button>
-      </Flex>
-      <Text
-        fontSize={{
-          base: "20px",
-          lg: "1.5vw"
-        }}
-        fontWeight={"light"}
-        cursor="default"
-      >
-        {"A Powerful, Free-to-use API!".split(" ").map((e, i) => <span key={i} className={indexStyle.powerHover}>{e} </span>)}
-      </Text>
 
       <StyledHeader>INFORMATION</StyledHeader>
       <Divider bg="black" h={".7px"} />

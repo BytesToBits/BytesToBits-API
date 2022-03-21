@@ -30,6 +30,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             //     maxAge:60*60*24*30
             // })
             CredentialsProvider({
+                name: "credentials",
                 credentials: {
                     email: { label: "Email", type: "email", placeholder: "example@email.com" },
                     password: { label: "Password", type: "password" }
@@ -37,20 +38,20 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                 async authorize(credentials, req) {
                     const account = await Accounts.exists(credentials.email)
                     const cryptr = new Cryptr(Config.secret)
-                    const password = cryptr.encrypt(credentials.password)
                     const encEmail = cryptr.encrypt(credentials.email)
                     const url = process.env.NODE_ENV == "development" ? "http://localhost:3000/" : Config.url
                     
                     if (account) {
-                        if (account.password == password) {
-                            console.log("Success login!")
-                            return account
+                        const password = cryptr.decrypt(account.password)
+                        if (credentials.password == password) {
+                            return {
+                                ...account,
+                                _id: null
+                            }
                         } else {
-                            console.log("Failed login!")
                             return res.redirect("/login?error=true")
                         }
                     } else {
-                        console.log("Verification")
                         const code = await Accounts.requestVerification(credentials.email, password)
 
                         const message = {
@@ -67,16 +68,30 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                 }
             })
         ],
+        jwt: {
+            secret: Config.secret,
+            encryption: true
+        },
+        secret: Config.secret,
+        session: {
+            strategy: "jwt"
+        },
         callbacks: {
-            async session({ session, user }) {
+            async jwt({ token, user }) {
+                if (user) {
+                    token.user = user
+                }
 
-                let data = user
+                return token
+            },
+            async session({ session, token }) {
+
+                let data = token.user
 
                 if (data) {
                     if (await Accounts.exists(data.email)) {
                         data.token = await Accounts.getToken(data.email)
                     }
-                    console.log(data.token)
                     data.tokenInfo = await Accounts.tokenInfo(data.token)
                 }
 

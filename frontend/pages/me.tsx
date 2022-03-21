@@ -5,8 +5,11 @@ import HeaderText from "../components/Text/Header";
 
 export default function Me({ session }) {
     console.log(session)
+    let endpoints = []
 
-    const endpoints = [...new Set(session.tokenInfo.actions.map(ac => ac.endpoint))]
+    if (session.tokenInfo.actions) {
+        endpoints = [...new Set(session.tokenInfo.actions.map(ac => ac.endpoint))]
+    }
 
     const { hasCopied, onCopy } = useClipboard(session.token)
 
@@ -15,7 +18,7 @@ export default function Me({ session }) {
             <HeaderText>My Account</HeaderText>
             <Divider bg="black" h={"1.5px"} mb={5} />
             <Text fontSize="1vw">Token: <Code>{session.token}</Code> <Button h={6} colorScheme="green" fontWeight={"normal"} onClick={onCopy}>{hasCopied ? "Copied" : "Copy"}</Button></Text>
-            {session.tokenInfo && (
+            {session.tokenInfo.actions && (
                 <>
                     <HeaderText
                         mt={5}
@@ -27,7 +30,6 @@ export default function Me({ session }) {
                         Token Info
                     </HeaderText>
                     <Divider bg="black" h={"1.5px"} mb={2} />
-
                     <Text>Session Uses: {session.tokenInfo.uses}</Text>
                     <Text>RateLimited: {session.tokenInfo.ratelimited == "false" ? "This token is not rate-limited" : Math.round(((new Date(session.tokenInfo.rateLimited)) - new Date()) / 1000) + " seconds remaining"}</Text>
                     <Text>Next RateLimit Timeout Duration: {session.tokenInfo["ratelimit-multi"].toFixed(2)} minutes</Text>
