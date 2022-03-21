@@ -60,7 +60,7 @@ export const getServerSideProps = async (ctx) => {
     if (!session) {
         return {
             redirect: {
-                destination: "/login",
+                destination: "/api/auth/signin",
                 permanent: false
             }
         }
