@@ -13,7 +13,8 @@ def response_file(token, data, status=200, headers={}):
         **headers,
         "X-RateLimit-Limit": 50,
         "X-Rate-Limit-Remaining": 50-token.uses(),
-        "X-Rate-Limit-Reset": reset
+        "X-Rate-Limit-Reset": reset,
+        "Content-Type": "image/png"
     }
     res.status = status
 

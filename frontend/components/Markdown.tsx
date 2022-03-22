@@ -11,7 +11,12 @@ export default function Markdown({ children }) {
                 code({ node, inline, className, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
                     return !inline && match ? (
-                        <SyntaxHighlighter style={tomorrow} language={match[1].toLowerCase()} {...props} showLineNumbers={true}>
+                        <SyntaxHighlighter style={tomorrow} language={match[1].toLowerCase()} {...props} showLineNumbers={true} wrapLines={true} lineProps={{
+                            style: {
+                                wordBreak: "break-all",
+                                whiteSpace: "pre-wrap"
+                            }
+                        }}>
                             {String(props.children).replace(/\n$/, "")}
                         </SyntaxHighlighter>
                     ) : (
