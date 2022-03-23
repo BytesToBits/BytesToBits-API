@@ -7,7 +7,7 @@ from datetime import datetime
 DEFAULT_AVATAR = "https://i.pinimg.com/564x/70/a6/08/70a60868bcef89d9bc93c7693af1481e.jpg"
 DEFAULT_MESSAGE = "Hello!"
 DEFAULT_NAME = "BytesToBits"
-DEFAULT_COLOR = "#ffffff"
+DEFAULT_COLOR = "ffffff"
 
 MESSAGE_WIDTH = 720
 MESSAGE_HEIGHT = 48
@@ -19,7 +19,7 @@ AVATAR_SIZE = (40,40)
 
 async def make_message(avatar_url=DEFAULT_AVATAR, message=DEFAULT_MESSAGE, name=DEFAULT_NAME, color=DEFAULT_COLOR, *args, **kwargs):
     message = message[:2000]
-    color = ImageColor.getcolor(color, 'RGB')
+    color = ImageColor.getcolor(f"#{color}", 'RGB')
     lines = textwrap.wrap(message, width=100)
 
     canvas = Image.new('RGB', (MESSAGE_WIDTH, MESSAGE_HEIGHT+(FONT_SIZE+LINE_HEIGHT)*(len(lines)-1)), BG_COLOR)

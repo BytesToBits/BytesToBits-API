@@ -13,7 +13,7 @@ export default function ApiConsole({ endpoint, method, token, ...rest }) {
     const apiCall = async() => {
         setLoading(true)
 
-        const res = await fetch(`${Config.apiUrl}/${endpoint}`, {
+        const res = await fetch(endpoint, {
             method: method,
             headers: {
                 Authorization: token
@@ -36,7 +36,7 @@ export default function ApiConsole({ endpoint, method, token, ...rest }) {
         } else {
             setImage(false)
             const data = await res.json()
-            return setOutput(data)
+            return setOutput(JSON.stringify(data))
         }
     }
 
@@ -58,7 +58,7 @@ export default function ApiConsole({ endpoint, method, token, ...rest }) {
                 <Button colorScheme="red" fontWeight="12px" height={"20px"} borderRadius="2px" onClick={clearConsole} isLoading={isLoading}>Clear</Button>
             </Flex>
 
-            {!isImage && (
+            {!isImage && output && (
                 <Markdown>
                     {`\`\`\`json
 ${output}`}
