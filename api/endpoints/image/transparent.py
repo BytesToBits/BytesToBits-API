@@ -9,7 +9,7 @@ from utils.images import make_transparent
 
 
 class Transparent(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/transparent", "/image/transparent/"]
+    endpoints: ClassVar[list] = ["/image/transparent", "/image/transparent/"]
 
     @make_async
     async def get(self):

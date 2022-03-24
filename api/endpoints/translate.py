@@ -7,7 +7,7 @@ from googletrans import Translator
 from db import Error
 
 class Translate(Resource):
-    endpoints: ClassVar[list[str]] = ["/translate", "/translate/"]
+    endpoints: ClassVar[list] = ["/translate", "/translate/"]
 
     @make_async
     async def get(self):

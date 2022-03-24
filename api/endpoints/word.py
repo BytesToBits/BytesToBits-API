@@ -10,7 +10,7 @@ from utils import read_json
 
 
 class Word(Resource):
-    endpoints: ClassVar[list[str]] = ["/word", "/word/"]
+    endpoints: ClassVar[list] = ["/word", "/word/"]
 
     @make_async
     async def get(self):

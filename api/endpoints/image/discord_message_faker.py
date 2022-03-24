@@ -9,7 +9,7 @@ from db import Error
 
 
 class DiscordMessageFaker(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/discord-message-faker", "/image/discord-message-faker/"]
+    endpoints: ClassVar[list] = ["/image/discord-message-faker", "/image/discord-message-faker/"]
 
     @make_async
     async def get(self):

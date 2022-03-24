@@ -9,7 +9,7 @@ from utils.images import change_hue
 
 
 class HueShift(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/hue-shift", "/image/hue-shift/"]
+    endpoints: ClassVar[list] = ["/image/hue-shift", "/image/hue-shift/"]
 
     @make_async
     async def get(self):

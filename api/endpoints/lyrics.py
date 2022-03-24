@@ -8,7 +8,7 @@ from utils import genius
 
 
 class Lyrics(Resource):
-    endpoints: ClassVar[list[str]] = ["/lyrics", "/lyrics/"]
+    endpoints: ClassVar[list] = ["/lyrics", "/lyrics/"]
 
     @make_async
     async def get(self):

@@ -13,7 +13,7 @@ from io import BytesIO
 
 
 class Convert(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/convert", "/image/convert/"]
+    endpoints: ClassVar[list] = ["/image/convert", "/image/convert/"]
 
     @make_async
     async def get(self):

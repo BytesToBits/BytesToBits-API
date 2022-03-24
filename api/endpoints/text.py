@@ -10,7 +10,7 @@ from utils import read_json
 
 
 class Text(Resource):
-    endpoints: ClassVar[list[str]] = ["/text", "/text/"]
+    endpoints: ClassVar[list] = ["/text", "/text/"]
 
     @make_async
     async def get(self):

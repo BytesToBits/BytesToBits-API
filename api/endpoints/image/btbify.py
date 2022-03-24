@@ -9,7 +9,7 @@ from utils.images import btbify
 
 
 class BTBIFY(Resource):
-    endpoints: ClassVar[list[str]] = ["/image/btbify", "/image/btbify/"]
+    endpoints: ClassVar[list] = ["/image/btbify", "/image/btbify/"]
 
     @make_async
     async def get(self):
