@@ -9,6 +9,7 @@ import Config from "../config.json"
 import fs from "fs"
 import HeaderText from "../components/Text/Header";
 import { FaCodeBranch } from "react-icons/fa"
+import getText from "../lib/getText";
 
 export default function Documentation({ session, endpoints }) {
     console.log(endpoints)
@@ -91,6 +92,7 @@ export default function Documentation({ session, endpoints }) {
                     </Flex>
 
                     <EndpointConsole endpoint={"word"} eKey={"word"} noArgs />
+
                     <EndpointConsole endpoint={"text"} eKey={"text"} noArgs />
 
                     <EndpointConsole endpoint={"translate"} eKey={"translate"} defaultArguments={"from=nl, to=en, text=Hoi!"} />
@@ -116,10 +118,14 @@ export const getServerSideProps = async (ctx) => {
 
     const files = fs.readdirSync("./public/messages/docs")
 
-    const endpoints = files.map(fileName => ({
-        name: fileName.replace(".md", ""),
-        content: fs.readFileSync("./public/messages/docs/" + fileName, 'utf-8')
-    }))
+    const endpoints = []
+
+    for (i in ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift"]) {
+        endpoints.push({
+            name: i,
+            content: await getText(process.env.NODE_ENV == "development" ? "http://localhost:3000" : Config.url + "/messages/docs/" + i + ".md")
+        })
+    }
 
     console.log(endpoints)
 
