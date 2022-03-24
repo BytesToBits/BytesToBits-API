@@ -13,12 +13,17 @@ export default function ApiConsole({ endpoint, method, token, ...rest }) {
     const apiCall = async() => {
         setLoading(true)
 
-        const res = await fetch(endpoint, {
-            method: method,
-            headers: {
-                Authorization: token
-            }
-        })
+        try{
+            const res = await fetch(endpoint, {
+                method: method,
+                headers: {
+                    Authorization: token
+                }
+            })
+        } catch(e) {
+            setLoading(false)
+            return setOutput(("{'message': 'Cannot reach API'}"))
+        }
 
         setLoading(false)
 

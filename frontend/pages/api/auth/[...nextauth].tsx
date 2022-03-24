@@ -23,12 +23,6 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             signIn: "/login"
         },
         providers: [
-            // CredentialsProvider({
-            //     server: Config.emailServer,
-            //     from: Config.originMail,
-            //     secret: Config.secret,
-            //     maxAge:60*60*24*30
-            // })
             CredentialsProvider({
                 name: "credentials",
                 credentials: {
@@ -49,7 +43,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                                 _id: null
                             }
                         } else {
-                            return res.redirect("/login?error=true")
+                            res.redirect("/login?error=true")
+                            return null
                         }
                     } else {
                         const code = await Accounts.requestVerification(credentials.email, password)
@@ -63,14 +58,16 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 
                         SendGrid.send(message).then(() => console.log("Email Sent"))
 
-                        return res.redirect("/verify?email=" + encEmail)
+                        res.redirect("/verify?email=" + encEmail)
+                        return null
                     }
                 }
             })
         ],
         jwt: {
             secret: Config.secret,
-            encryption: true
+            encryption: true,
+            maxAge: 30*24*60*60
         },
         secret: Config.secret,
         session: {
@@ -78,6 +75,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         },
         callbacks: {
             async jwt({ token, user }) {
+
                 if (user) {
                     token.user = user
                 }
@@ -85,17 +83,21 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                 return token
             },
             async session({ session, token }) {
+                session = token.user
 
-                let data = token.user
-
-                if (data) {
-                    if (await Accounts.exists(data.email)) {
-                        data.token = await Accounts.getToken(data.email)
+                if (session) {
+                    if (await Accounts.exists(session.email)) {
+                        session.token = await Accounts.getToken(session.email)
                     }
-                    data.tokenInfo = await Accounts.tokenInfo(data.token)
+                    session.tokenInfo = await Accounts.tokenInfo(session.token)
+                    if(session.tokenInfo) {
+                        const endpoints = [...new Set(session.tokenInfo.actions.map(ac => ac.endpoint))]
+                        const actions = endpoints.map(ep => [ep, session.tokenInfo.actions.filter(e => e.endpoint == ep).length])
+                        session.tokenInfo.actions = JSON.stringify(actions)
+                    }
                 }
 
-                return data
+                return session
             }
         }
     })

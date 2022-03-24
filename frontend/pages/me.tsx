@@ -4,14 +4,11 @@ import BaseLayout from "../components/BaseLayout";
 import HeaderText from "../components/Text/Header";
 
 export default function Me({ session }) {
-    console.log(session)
-    let endpoints = []
-
-    if (session.tokenInfo.actions) {
-        endpoints = [...new Set(session.tokenInfo.actions.map(ac => ac.endpoint))]
-    }
 
     const { hasCopied, onCopy } = useClipboard(session.token)
+    let endpoints = []
+
+    if (session.tokenInfo) endpoints = JSON.parse(session.tokenInfo.actions)
 
     return (
         <BaseLayout title={"My Account"}>
@@ -42,9 +39,9 @@ export default function Me({ session }) {
                         </Thead>
                         <Tbody>
                             {endpoints.map(ep => (
-                                <Tr key={ep}>
-                                    <Td>{ep}</Td>
-                                    <Td>{session.tokenInfo.actions.filter(e => e.endpoint == ep).length}</Td>
+                                <Tr key={ep[0]}>
+                                    <Td>{ep[0]}</Td>
+                                    <Td>{ep[1]}</Td>
                                 </Tr>
                             ))}
                         </Tbody>
