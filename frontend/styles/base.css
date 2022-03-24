@@ -17,7 +17,7 @@ ul, ol {
     list-style: none;
 }
 
-li::before {
+li:not(.no-icon)::before {
     content: "💠";
     margin-right: 5px;
 }

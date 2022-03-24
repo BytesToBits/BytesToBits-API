@@ -1,3 +1,14 @@
-### **Text** Endpoint
-The **text** endpoint returns a randomly selected text from our storage.  
-*This endpoint takes no arguments*
+Returns a random text from our storage in JSON format.  
+**Example:**
+```py
+import requests
+
+api_key = "YOURAPIKEY"
+
+response = requests.get("https://api.bytestobits.dev/text/", headers={
+    "Authorization": api_key
+})
+
+text = response.json()
+print(text)
+```

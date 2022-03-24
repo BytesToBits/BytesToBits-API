@@ -1,3 +1,4 @@
+import { Code } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/prism"; 
@@ -20,9 +21,9 @@ export default function Markdown({ children }) {
                             {String(props.children).replace(/\n$/, "")}
                         </SyntaxHighlighter>
                     ) : (
-                        <code className={className} {...props}>
+                        <Code className={className} {...props}>
                             {props.children}
-                        </code>
+                        </Code>
                     );
                 }
             }}

@@ -10,38 +10,38 @@ export default function ApiConsole({ endpoint, method, token, ...rest }) {
     const [isImage, setImage] = useState(false)
     const { hasCopied, onCopy } = useClipboard(output)
 
-    const apiCall = async() => {
+    const apiCall = async () => {
         setLoading(true)
 
-        try{
+        try {
             const res = await fetch(endpoint, {
                 method: method,
                 headers: {
                     Authorization: token
                 }
             })
-        } catch(e) {
+
+            setLoading(false)
+
+            if (!res.ok) {
+                return setOutput("{'message': 'Could not fetch from the API'}")
+            }
+
+            const contentType = await res.headers.get("Content-Type")
+
+            if (contentType == "image/png") {
+                setImage(true)
+                const blob = await res.blob()
+                const imageUrl = URL.createObjectURL(blob)
+                return setOutput(imageUrl)
+            } else {
+                setImage(false)
+                const data = await res.json()
+                return setOutput(JSON.stringify(data))
+            }
+        } catch (e) {
             setLoading(false)
             return setOutput(("{'message': 'Cannot reach API'}"))
-        }
-
-        setLoading(false)
-
-        if(!res.ok) {
-            return setOutput("{'message': 'Could not fetch from the API'}")
-        }
-
-        const contentType = await res.headers.get("Content-Type")
-
-        if(contentType == "image/png") {
-            setImage(true)
-            const blob = await res.blob()
-            const imageUrl = URL.createObjectURL(blob)
-            return setOutput(imageUrl)
-        } else {
-            setImage(false)
-            const data = await res.json()
-            return setOutput(JSON.stringify(data))
         }
     }
 

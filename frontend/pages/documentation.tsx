@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, Box, Divider, Flex, FormControl, FormHelperText, FormLabel, Input, SimpleGrid, Text } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Box, Divider, Flex, FormControl, FormHelperText, FormLabel, Input, Link, List, ListIcon, ListItem, SimpleGrid, Text } from "@chakra-ui/react";
 import _ from "lodash";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
@@ -6,13 +6,19 @@ import ApiConsole from "../components/ApiConsole";
 import BaseLayout from "../components/BaseLayout";
 import Markdown from "../components/Markdown";
 import Config from "../config.json"
-import getText from "../lib/getText";
+import fs from "fs"
+import HeaderText from "../components/Text/Header";
+import { FaCodeBranch } from "react-icons/fa"
 
 export default function Documentation({ session, endpoints }) {
     console.log(endpoints)
 
     const EndpointConsole = ({ endpoint, eKey, method , noArgs, defaultArguments}) => {
         const [args, setArgs] = useState(defaultArguments || "")
+
+        const text = endpoints.find(e => e.name == eKey)
+
+        console.log(text)
 
         const requestUrl = () => {
             let urlArgs: String | Array<String> = args
@@ -35,12 +41,12 @@ export default function Documentation({ session, endpoints }) {
         }
 
         return (
-            <Flex direction={"column"} gap={2} id={`${endpoint}`}>
+            <Flex direction={"column"} gap={2} id={`${eKey}`}>
                 <Box p={2} fontWeight="light">
                     <Box my={2}>
                         <Text fontSize={"1.5vw"} fontWeight="medium">/{endpoint}/ Endpoint</Text>
                         <Markdown>
-                            {endpoints[eKey]}
+                            {text && (text.content)}
                         </Markdown>
                     </Box>
                     <Divider />
@@ -71,6 +77,19 @@ export default function Documentation({ session, endpoints }) {
             )}
             {session && (
                 <Flex direction="column" gap={3}>
+                    <Flex m={3} direction="column">
+                        <HeaderText>Quick Access</HeaderText>
+                        <List mx={5}>
+                            {endpoints.reverse().map(endpoint => (
+                                <ListItem key={`quickaccess-${endpoint}`} className="no-icon">
+                                    <ListIcon as={FaCodeBranch} color="blue.400" />
+                                    <Link href={"#" + endpoint.name}>{endpoint.name}</Link>
+                                </ListItem>
+                            ))}
+                        </List>
+
+                    </Flex>
+
                     <EndpointConsole endpoint={"word"} eKey={"word"} noArgs />
                     <EndpointConsole endpoint={"text"} eKey={"text"} noArgs />
 
@@ -95,13 +114,19 @@ export default function Documentation({ session, endpoints }) {
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx)
 
+    const files = fs.readdirSync("./public/messages/docs")
+
+    const endpoints = files.map(fileName => ({
+        name: fileName.replace(".md", ""),
+        content: fs.readFileSync("./public/messages/docs/" + fileName, 'utf-8')
+    }))
+
+    console.log(endpoints)
+
     return {
         props: {
             session,
-            endpoints: {
-                word: await getText("docs/word"),
-                text: await getText("docs/text")
-            }
+            endpoints: endpoints
         }
     }
 }
