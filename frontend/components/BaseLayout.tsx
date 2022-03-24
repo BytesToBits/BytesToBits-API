@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 import { FaList } from "react-icons/fa"
 
 export const Navigation = () => {
+    const router = useRouter()
     const isMobile = useBreakpointValue({
         base: true,
         md: false
@@ -39,7 +40,6 @@ export const Navigation = () => {
 }
 
 export default function BaseLayout({ title, children }) {
-    const router = useRouter()
 
     return (
         <>

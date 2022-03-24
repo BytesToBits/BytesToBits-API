@@ -5,10 +5,6 @@
     scroll-behavior: smooth;
 }
 
-a {
-    color: blue
-}
-
 a:hover {
     text-decoration: underline;
 }

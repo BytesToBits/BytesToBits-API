@@ -44,6 +44,9 @@ const styles = {
         "::-webkit-scrollbar-track": {
             background: "transparent"
         },
+        "a": {
+            color: "blue"
+        },
         body: {
             bg: "background",
         },
