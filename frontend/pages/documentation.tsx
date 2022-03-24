@@ -116,14 +116,14 @@ export default function Documentation({ session, endpoints }) {
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx)
 
-    const files = fs.readdirSync("./public/messages/docs")
-
     const endpoints = []
+    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift"]
 
-    for (i in ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift"]) {
+    for (let i in docs) {
+        const ep = docs[i]
         endpoints.push({
-            name: i,
-            content: await getText(process.env.NODE_ENV == "development" ? "http://localhost:3000" : Config.url + "/messages/docs/" + i + ".md")
+            name: ep,
+            content: await getText("docs/" + ep)
         })
     }
 
