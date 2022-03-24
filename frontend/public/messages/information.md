@@ -1,4 +1,4 @@
 The BytesToBits API is a free, open-source API available to everyone.  
-In order to use the API, you need to use a key. To obtain one, [use an account](/login)! API Keys are unique for each account, and they should not be shared with others!  
-API keys are also used to prevent API spams. That's why there is a **50 requests/minute** limit set to all accounts. Surpassing this limit will result in getting rate-limited and temporarily blocked from using the API. The more frequent the rate-limit is triggered, the longer the timeouts will be, so be aware.
-Check out [How to not get rate-limited](/#rate-limits) to avoid such encounters.
+In order to use the API, you need to use a key. To obtain one, [create an account](/login)! API keys are unique, and they should not be shared with others.  
+API keys are also used to prevent API spams. That's why there is a **50 requests/minute** limit set to all accounts. Surpassing this limit will result in getting rate-limited, which is a temporary block from using the API. The more frequent the rate-limit is triggered, the longer the timeouts will be, so be aware.
+Check out [How to not get rate-limited](/#rate-limits) to prevent it.

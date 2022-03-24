@@ -30,3 +30,5 @@ fetch(url, {
     }
 }).then(response => response.json()).then(text => console.log(text))
 ```
+
+For more information on how to use the API and the available endpoints, check the [documentation](/documentation) page.
