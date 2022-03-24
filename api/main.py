@@ -17,4 +17,4 @@ async def index():
 for Resource in Resources:
     api.add_resource(Resource, *Resource.endpoints)
 
-app.run(debug=True)
+app.run(debug=False)

@@ -101,11 +101,11 @@ export default function Documentation({ session, endpoints }) {
 
                     <EndpointConsole endpoint={"image/discord-message-faker"} eKey={"DiscordMessageFaker"} defaultArguments={"message=Hey there!!, name=Bob, color=63f72c"} />
 
-                    <EndpointConsole endpoint={"image/btbify"} eKey={"BTBify"} defaultArguments={"image=https://i.imgur.com/fItNMCG.png"} />
+                    <EndpointConsole endpoint={"image/btbify"} eKey={"BTBify"} defaultArguments={"image=https://cdn.discordapp.com/attachments/718575580731408455/951088951798689812/2e8cde47c6d3d5c53847ad55a8a7d564.jpg"} />
 
-                    <EndpointConsole endpoint={"image/convert"} eKey={"Convert"} defaultArguments={"image=https://i.imgur.com/fItNMCG.png, to=L"} />
+                    <EndpointConsole endpoint={"image/convert"} eKey={"Convert"} defaultArguments={"image=https://cdn.discordapp.com/attachments/718575580731408455/951088951798689812/2e8cde47c6d3d5c53847ad55a8a7d564.jpg, to=L"} />
 
-                    <EndpointConsole endpoint={"image/hue-shift"} eKey={"HueShift"} defaultArguments={"image=https://i.imgur.com/fItNMCG.png, shift=50"} />
+                    <EndpointConsole endpoint={"image/hue-shift"} eKey={"HueShift"} defaultArguments={"image=https://cdn.discordapp.com/attachments/718575580731408455/951088951798689812/2e8cde47c6d3d5c53847ad55a8a7d564.jpg, shift=50"} />
 
                 </Flex>
             )}
