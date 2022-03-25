@@ -1,0 +1,4 @@
+{
+    "mongoUri": "mongo-uri",
+    "geniusKey": "genius-lyrics-api-key"
+}
