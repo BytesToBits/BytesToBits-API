@@ -34,20 +34,22 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                     const cryptr = new Cryptr(Config.secret)
                     const encEmail = cryptr.encrypt(credentials.email)
                     const url = process.env.NODE_ENV == "development" ? "http://localhost:3000/" : Config.url
-                    
+
                     if (account) {
                         const password = cryptr.decrypt(account.password)
                         if (credentials.password == password) {
+
                             return {
                                 ...account,
                                 _id: null
                             }
                         } else {
-                            res.redirect("/login?error=true")
-                            return null
+                            return {
+                                redirect: "/login?error=true"
+                            }
                         }
                     } else {
-                        const code = await Accounts.requestVerification(credentials.email, password)
+                        const code = await Accounts.requestVerification(credentials.email, cryptr.encrypt(credentials.password))
 
                         const message = {
                             to: credentials.email,
@@ -55,11 +57,10 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                             subject: "BytesToBits API - Create Your Account",
                             html: emailStyle(credentials?.email, url, code),
                         }
-
-                        SendGrid.send(message).then(() => console.log("Email Sent"))
-
-                        res.redirect("/verify?email=" + encEmail)
-                        return null
+                        await SendGrid.send(message)
+                        return {
+                            redirect: "/verify?email=" + encEmail
+                        }
                     }
                 }
             })
@@ -67,13 +68,21 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         jwt: {
             secret: Config.secret,
             encryption: true,
-            maxAge: 30*24*60*60
+            maxAge: 30 * 24 * 60 * 60
         },
         secret: Config.secret,
         session: {
             strategy: "jwt"
         },
         callbacks: {
+            async signIn({ user }) {
+                console.log(user)
+                if (user.redirect) {
+                    return user.redirect
+                } else {
+                    return user
+                }
+            },
             async jwt({ token, user }) {
 
                 if (user) {
@@ -90,7 +99,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                         session.token = await Accounts.getToken(session.email)
                     }
                     session.tokenInfo = await Accounts.tokenInfo(session.token)
-                    if(session.tokenInfo) {
+                    if (session.tokenInfo.actions) {
                         const endpoints = [...new Set(session.tokenInfo.actions.map(ac => ac.endpoint))]
                         const actions = endpoints.map(ep => [ep, session.tokenInfo.actions.filter(e => e.endpoint == ep).length])
                         session.tokenInfo.actions = JSON.stringify(actions)

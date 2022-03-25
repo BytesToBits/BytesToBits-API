@@ -8,7 +8,7 @@ export default function Me({ session }) {
     const { hasCopied, onCopy } = useClipboard(session.token)
     let endpoints = []
 
-    if (session.tokenInfo) endpoints = JSON.parse(session.tokenInfo.actions)
+    if (session.tokenInfo.actions) endpoints = JSON.parse(session.tokenInfo.actions)
 
     return (
         <BaseLayout title={"My Account"}>

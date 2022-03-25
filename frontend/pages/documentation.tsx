@@ -12,14 +12,11 @@ import { FaCodeBranch } from "react-icons/fa"
 import getText from "../lib/getText";
 
 export default function Documentation({ session, endpoints }) {
-    console.log(endpoints)
 
     const EndpointConsole = ({ endpoint, eKey, method , noArgs, defaultArguments}) => {
         const [args, setArgs] = useState(defaultArguments || "")
 
         const text = endpoints.find(e => e.name == eKey)
-
-        console.log(text)
 
         const requestUrl = () => {
             let urlArgs: String | Array<String> = args
@@ -126,8 +123,6 @@ export const getServerSideProps = async (ctx) => {
             content: await getText("docs/" + ep)
         })
     }
-
-    console.log(endpoints)
 
     return {
         props: {

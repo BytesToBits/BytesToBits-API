@@ -43,7 +43,6 @@ export default function Verify({ email, error }) {
                                 return null
                             }
                             const data = await res.json()
-                            console.log(data)
 
                             if (!data.pass) {
                                 window.location = `${window.location.href + "&error=true"}`
