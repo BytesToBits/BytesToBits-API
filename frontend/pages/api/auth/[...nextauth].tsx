@@ -76,7 +76,6 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         },
         callbacks: {
             async signIn({ user }) {
-                console.log(user)
                 if (user.redirect) {
                     return user.redirect
                 } else {
