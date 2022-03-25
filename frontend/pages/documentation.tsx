@@ -13,7 +13,7 @@ import getText from "../lib/getText";
 
 export default function Documentation({ session, endpoints }) {
 
-    const EndpointConsole = ({ endpoint, eKey, method , noArgs, defaultArguments}) => {
+    const EndpointConsole = ({ endpoint, eKey, method, noArgs, defaultArguments }) => {
         const [args, setArgs] = useState(defaultArguments || "")
 
         const text = endpoints.find(e => e.name == eKey)
@@ -42,7 +42,10 @@ export default function Documentation({ session, endpoints }) {
             <Flex direction={"column"} gap={2} id={`${eKey}`}>
                 <Box p={2} fontWeight="light">
                     <Box my={2}>
-                        <Text fontSize={"1.5vw"} fontWeight="medium">/{endpoint}/ Endpoint</Text>
+                        <Text fontSize={{
+                            base: "20px",
+                            lg: "1.5vw"
+                        }} fontWeight="medium">/{endpoint}/ Endpoint</Text>
                         <Markdown>
                             {text && (text.content)}
                         </Markdown>
