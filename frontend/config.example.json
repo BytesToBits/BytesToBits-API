@@ -1,0 +1,15 @@
+{
+    "emailServer": {
+        "host": "smtp.sendgrid.net",
+        "port": "587",
+        "auth": {
+            "user": "apikey",
+            "pass": "YourAPIKey"
+        }
+    },
+    "originMail": "noreply@bytestobits.dev",
+    "mongoUri": "mongo-uri",
+    "secret": "AVerySecureString",
+    "url": "https://docs.bytestobits.dev/",
+    "apiUrl": "https://api.bytestobits.dev/"
+}
