@@ -34,7 +34,10 @@ class Similarity(Resource):
             hash2 = imagehash.average_hash(Image.open(BytesIO(image_two.content)))
     
             rate = hash1-hash2
-            similar = hash1 - hash2 <= 5
+
+            strictness = request.args.get("strictness") or 5
+
+            similar = hash1 - hash2 <= int(strictness)
 
             return response(token, { "similarity_rate": rate, "similar": similar })
 
