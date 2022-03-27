@@ -109,6 +109,8 @@ export default function Documentation({ session, endpoints }) {
 
                     <EndpointConsole endpoint={"image/transparent"} eKey={"Transparent"} defaultArguments={"image=https://cdn.discordapp.com/attachments/718575580731408455/951088951798689812/2e8cde47c6d3d5c53847ad55a8a7d564.jpg, color=070b16, strength=40"} />
 
+                    <EndpointConsole endpoint={"image/similarity"} eKey={"Similarity"} defaultArguments={"compare=https://cdn.discordapp.com/attachments/614909956881121308/956591164289593385/Level-Card-BytesToBits.png, to=https://cdn.discordapp.com/attachments/614909956881121308/956598111697010769/Level-Card-BytesToBits.png"} />
+
                 </Flex>
             )}
         </BaseLayout>
@@ -119,7 +121,7 @@ export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx)
 
     const endpoints = []
-    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent"]
+    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent", "Strictness"]
 
     for (let i in docs) {
         const ep = docs[i]

@@ -8,6 +8,7 @@ from .image.convert import Convert
 from .image.btbify import BTBIFY
 from .image.transparent import Transparent
 from .image.hue_shift import HueShift
+from .image.similarity import Similarity
 
 Resources = (
     Text,
@@ -19,5 +20,6 @@ Resources = (
     Convert,
     BTBIFY,
     Transparent,
-    HueShift
+    HueShift,
+    Similarity
 )
