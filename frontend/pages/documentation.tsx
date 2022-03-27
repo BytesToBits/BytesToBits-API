@@ -121,7 +121,7 @@ export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx)
 
     const endpoints = []
-    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent", "Strictness"]
+    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent", "Similarity"]
 
     for (let i in docs) {
         const ep = docs[i]
