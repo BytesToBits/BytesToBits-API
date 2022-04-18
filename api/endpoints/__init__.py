@@ -10,6 +10,8 @@ from .image.transparent import Transparent
 from .image.hue_shift import HueShift
 from .image.similarity import Similarity
 
+from .beta.youtube_search import YoutubeSearch
+
 Resources = (
     Text,
     Lyrics,
@@ -21,5 +23,7 @@ Resources = (
     BTBIFY,
     Transparent,
     HueShift,
-    Similarity
+    Similarity,
+
+    YoutubeSearch
 )
