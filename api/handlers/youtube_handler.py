@@ -1,4 +1,5 @@
-import youtube_dl, youtube_search
+import youtube_dl
+from youtubesearchpython import VideosSearch
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
@@ -21,12 +22,12 @@ ffmpeg_options = {
 ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
 def find_and_download(query):
-    search_results = youtube_search.YoutubeSearch(query).to_dict()
+    search_results = VideosSearch(query, 1).result()
 
-    if not search_results:
+    if not search_results or not 'result' in search_results:
         return None
     
-    url = "https://www.youtube.com/" + search_results[0]["url_suffix"]
+    url = search_results['result'][0]['link']
 
     data = ytdl.extract_info(url, download=False)
     
