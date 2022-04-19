@@ -95,8 +95,6 @@ export default function Documentation({ session, endpoints }) {
 
                     <EndpointConsole endpoint={"text"} eKey={"text"} noArgs />
 
-                    <EndpointConsole endpoint={"translate"} eKey={"translate"} defaultArguments={"from=nl, to=en, text=Hoi!"} />
-
                     <EndpointConsole endpoint={"lyrics"} eKey={"lyrics"} defaultArguments={"song=Royalty, author=Conor Maynard"} />
 
                     <EndpointConsole endpoint={"image/discord-message-faker"} eKey={"DiscordMessageFaker"} defaultArguments={"message=Hey there!!, name=Bob, color=63f72c"} />
@@ -121,7 +119,7 @@ export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx)
 
     const endpoints = []
-    const docs = ["word", "text", "translate", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent", "Similarity"]
+    const docs = ["word", "text", "lyrics", "DiscordMessageFaker", "BTBify", "Convert", "HueShift", "Transparent", "Similarity"]
 
     for (let i in docs) {
         const ep = docs[i]
