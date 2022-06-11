@@ -5,6 +5,8 @@ from flask_cors import CORS
 from endpoints import Resources
 from handlers.asynchronous import make_async
 
+import argparse
+
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
@@ -17,4 +19,9 @@ async def index():
 for Resource in Resources:
     api.add_resource(Resource, *Resource.endpoints)
 
-app.run(debug=True)
+parser = argparse.ArgumentParser()
+parser.add_argument('--dev', dest='dev', action='store_true')
+
+args = parser.parse_args()
+
+app.run(debug=args.dev)
